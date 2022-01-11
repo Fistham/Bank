@@ -12,9 +12,19 @@ public class BankApplication {
 	}
 
 	private void runApplication() {
-		int choice = 0;
+		int choice;
+		String ledger;
 		System.out.println("Welcome to Jimbob Banking!\n");
+		if (isLedgerEmpty()) {
+			System.out.print("Would you like add accounts from ledger (y/n) : ");
+			ledger = scan.nextLine();
+			newLine();
+			if (ledger.trim().toLowerCase().equals("y")) {
+				bank.addAccountsFromLedger();
+			}
+		}
 		while (true) {
+			choice = 0;
 			printMenu();
 			try {
 				choice = Integer.parseInt(scan.nextLine());
@@ -49,6 +59,21 @@ public class BankApplication {
 					printAllAccounts();
 					break;
 				case 9:
+//					if (bank.addAccountsFromLedger()) {
+//						System.out.println("Read Successful!\n");
+//					} else {
+//						System.out.println("Read Unsuccessful!\n");
+//					}
+					break;
+				case 10:
+					if (bank.addAccountsToLedger()) {
+						System.out.println("Write Successful!\n");
+					} else {
+						System.out.println("Write Unsuccessful!\n");
+					}
+					break;
+				case 11:
+					scan.close();
 					quit();
 					break;
 				default:
@@ -57,6 +82,14 @@ public class BankApplication {
 				}
 			}
 
+		}
+	}
+
+	private boolean isLedgerEmpty() {
+		if (FileHandler.readFromFile() != null) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -264,9 +297,10 @@ public class BankApplication {
 	}
 
 	private static void printMenu() {
-		System.out.println("\nMENU\n" + "1 : Find Account(s) for Customer\n" + "2 : Search for Customer\n"
-				+ "3 : Deposit\n" + "4 : Withdraw\n" + "5 : Transfer between Accounts\n" + "6 : Create Account\n"
-				+ "7 : Remove Account\n" + "8 : Print all Accounts\n" + "9 : Exit\n");
+		System.out.println("\nMENU\n" + "1  : Find Account(s) for Customer\n" + "2  : Search for Customer\n"
+				+ "3  : Deposit\n" + "4  : Withdraw\n" + "5  : Transfer between Accounts\n" + "6  : Create Account\n"
+				+ "7  : Remove Account\n" + "8  : Print all Accounts\n" + "9  : Read from ledger\n"
+				+ "10 : Write to ledger\n" + "11 : Exit\n");
 		System.out.print("Enter your choice: ");
 	}
 

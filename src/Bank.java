@@ -7,6 +7,13 @@ public class Bank {
 		accounts = new ArrayList<BankAccount>();
 	}
 
+	public Bank(ArrayList<BankAccount> accounts) {
+		this.accounts = new ArrayList<BankAccount>();
+		for (int i = 0; i < accounts.size(); i++) {
+			this.accounts.add(accounts.get(i));
+		}
+	}
+
 	public long addAccount(String holderName, long idNr) {
 		BankAccount account;
 		for (int i = 0; i < accounts.size(); i++) {
@@ -78,6 +85,28 @@ public class Bank {
 		}
 		return customerList;
 
+	}
+
+	public void addAccountsFromLedger() {
+		ArrayList<BankAccount> ledgerAccounts = FileHandler.readFromFile();
+		for (int i = 0; i < ledgerAccounts.size(); i++) {
+			for (int j = 0; j < accounts.size(); j++) {
+				if (accounts.get(j).equals(ledgerAccounts.get(i))) {
+
+				}
+			}
+		}
+
+//		if (accounts != null) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+
+	}
+
+	public boolean addAccountsToLedger() {
+		return FileHandler.writeToFile(getAllAccounts());
 	}
 
 }

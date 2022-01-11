@@ -1,5 +1,5 @@
 
-
+//import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,40 +9,88 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileHandler {
-	
-	
 
 	/**
 	 * Returnerar max nbrOfRows rader från filen som en vektor av Applicant-objekt.
 	 * Läser i filen tills det inte finns fler rader eller tills man läst nbrOfRows
-	 * rader (det som inträffar först). 
-	 * Returnerar null om filen inte finns.
+	 * rader (det som inträffar först). Returnerar null om filen inte finns.
 	 */
-	public static ArrayList<BankAccount> readFromFile(String fileName) {
+	public static ArrayList<BankAccount> readFromFile() {
 		Scanner scan;
+//		BufferedReader reader;
+
+		// Try to read Ledger.txt
 		try {
-			scan = new Scanner(new File("Ledger.txt"), "utf-8");
+			scan = new Scanner(new File("Ledger.txt"));
 		} catch (FileNotFoundException e) {
-			System.err.println("File not found" + fileName);
+			System.err.println("File not found");
 			e.printStackTrace();
 			return null;
 		}
-		//Här kan du använda Scannern för att läsa från filen fileName.
-		//Varje rad motsvarar en Applicant. Kontrollera vad Applicants konstruktor kräver
-		//Alla Applicant-objekt (max nbrOfRows stycken) ska lagras i en Applicant-vektor och returneras på slutet
-		return null; //Byt ut denna rad mot hela lösningen
+
+		ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
+
+		String name, idString, balanceString, accountNrString;
+		double balance;
+		long holderId;
+		int accountNr;
+
+		while (scan.hasNext()) {
+			name = scan.next();
+
+			// Try to parse SSN to long.
+			try {
+				idString = scan.next();
+				holderId = Long.parseLong(idString);
+			} catch (NumberFormatException e) {
+				System.err.println("Could not parse SSN to long.");
+				return null;
+			}
+
+			// Try to parse balance to double.
+			try {
+				balanceString = scan.next();
+				balance = Double.parseDouble(balanceString);
+			} catch (NumberFormatException e) {
+				System.err.println("Could not parse balance to double.");
+				return null;
+			}
+
+			// Try to parse account number to int.
+			try {
+				accountNrString = scan.next();
+				accountNr = Integer.parseInt(accountNrString);
+			} catch (NumberFormatException e) {
+				System.err.println("Could not parse account number to int.");
+				return null;
+			}
+			
+			BankAccount curr = new BankAccount(name, holderId, balance, accountNr);
+
+			accounts.add(curr);
+
+		}
+		scan.close();
+		return accounts;
 	}
-	
-	public static void writeToFile(String fileName, ArrayList<BankAccount> list) {
+
+	public static boolean writeToFile(ArrayList<BankAccount> list) {
 		BufferedWriter writer;
+
+		// Try to write to file
 		try {
 			writer = new BufferedWriter(new FileWriter("Ledger.txt"));
-			for(int i = 0; i < list.size(); i++) {
-				writer.write(list.get(i).toString());
+			for (int i = 0; i < list.size(); i++) {
+				writer.write(list.get(i).getHolder().getName() + " " + list.get(i).getHolder().getIdNr() + " "
+						+ list.get(i).getBalance() + " " + list.get(i).getAccountNumber() + "\n");
 			}
-		}catch(IOException e) {
+			writer.close();
+		} catch (IOException e) {
+			System.err.println("Could not write to file.");
 			e.printStackTrace();
+			return false;
 		}
-		
+		return true;
+
 	}
 }
