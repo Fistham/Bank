@@ -21,6 +21,7 @@ public class BankApplication {
 			newLine();
 			if (ledger.trim().toLowerCase().equals("y")) {
 				bank.addAccountsFromLedger();
+				System.out.println("\nAdded accounts from ledger.\n");
 			}
 		}
 		while (true) {

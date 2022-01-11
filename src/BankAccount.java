@@ -5,9 +5,10 @@ public class BankAccount {
 	private double balance;
 	private int accountNr;
 	private Random rand = new Random();
-	
+
 	/**
 	 * Constructor for when the customer does not exist.
+	 * 
 	 * @param holderName
 	 * @param holderId
 	 */
@@ -18,9 +19,10 @@ public class BankAccount {
 		accountNr = Integer.parseInt(s);
 		balance = 0;
 	}
-	
+
 	/**
 	 * Constructor for when a customer exists.
+	 * 
 	 * @param holder
 	 */
 	public BankAccount(Customer holder) {
@@ -29,9 +31,10 @@ public class BankAccount {
 		accountNr = Integer.parseInt(s);
 		balance = 0;
 	}
-	
+
 	/**
 	 * Constructor for FileHandlers reader from Ledger.txt
+	 * 
 	 * @param holderName
 	 * @param holderId
 	 * @param balance
@@ -42,33 +45,37 @@ public class BankAccount {
 		this.balance = balance;
 		this.accountNr = accountNr;
 	}
-	
+
 	/**
 	 * Gets holder (customer).
+	 * 
 	 * @return holder/customer
 	 */
 	public Customer getHolder() {
 		return holder;
 	}
-	
+
 	/**
 	 * Gets account number.
+	 * 
 	 * @return accountNr
 	 */
 	public int getAccountNumber() {
 		return accountNr;
 	}
-	
+
 	/**
 	 * Gets account balance.
+	 * 
 	 * @return balance
 	 */
 	public double getBalance() {
 		return balance;
 	}
-	
+
 	/**
 	 * Deposits amount in account.
+	 * 
 	 * @param amount
 	 * @return true if deposit successful
 	 */
@@ -83,9 +90,10 @@ public class BankAccount {
 		}
 
 	}
-	
+
 	/**
 	 * Withdraws amount from account.
+	 * 
 	 * @param amount
 	 * @return true if withdraw successful
 	 */
@@ -106,7 +114,7 @@ public class BankAccount {
 		String s = "Customer: " + holder.getName() + "\nAccountNr: " + accountNr + "\nBalance: " + balance;
 		return s;
 	}
-	
+
 //	@Override
 //	public boolean equals(Object obj) {
 //		if(obj instanceof BankAccount) {
