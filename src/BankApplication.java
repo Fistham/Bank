@@ -15,7 +15,7 @@ public class BankApplication {
 		int choice;
 		String ledger;
 		System.out.println("Welcome to Jimbob Banking!\n");
-		if (isLedgerEmpty()) {
+		if (isLedgerEmptyOnStartUp()) {
 			System.out.print("Would you like add accounts from ledger (y/n) : ");
 			ledger = scan.nextLine();
 			newLine();
@@ -59,11 +59,21 @@ public class BankApplication {
 					printAllAccounts();
 					break;
 				case 9:
-//					if (bank.addAccountsFromLedger()) {
-//						System.out.println("Read Successful!\n");
-//					} else {
-//						System.out.println("Read Unsuccessful!\n");
-//					}
+					int addFromLedger = bank.addAccountsFromLedger();
+					switch (addFromLedger) {
+					case 0:
+						System.out.println("Accounts are up to date already.\n");
+						break;
+					case 1:
+						System.out.println("Accounts were updated from ledger.\n");
+						break;
+					case 2:
+						System.out.println("Ledger was out of date, added accounts to ledger.\n");
+						break;
+					default:
+						System.out.println("Ledger is empty.\n");
+						break;
+					}
 					break;
 				case 10:
 					if (bank.addAccountsToLedger()) {
@@ -85,7 +95,7 @@ public class BankApplication {
 		}
 	}
 
-	private boolean isLedgerEmpty() {
+	private boolean isLedgerEmptyOnStartUp() {
 		if (FileHandler.readFromFile() != null) {
 			return true;
 		} else {

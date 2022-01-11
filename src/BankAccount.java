@@ -106,5 +106,15 @@ public class BankAccount {
 		String s = "Customer: " + holder.getName() + "\nAccountNr: " + accountNr + "\nBalance: " + balance;
 		return s;
 	}
+	
+//	@Override
+//	public boolean equals(Object obj) {
+//		if(obj instanceof BankAccount) {
+//			
+//		}else {
+//			
+//		}
+//		return false;
+//	}
 
 }
