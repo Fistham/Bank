@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Bank {
 	private ArrayList<BankAccount> accounts;
@@ -87,21 +88,34 @@ public class Bank {
 
 	}
 
-	public void addAccountsFromLedger() {
+	public int addAccountsFromLedger() {
 		ArrayList<BankAccount> ledgerAccounts = FileHandler.readFromFile();
-		for (int i = 0; i < ledgerAccounts.size(); i++) {
-			for (int j = 0; j < accounts.size(); j++) {
-				if (accounts.get(j).equals(ledgerAccounts.get(i))) {
+		ArrayList<BankAccount> diffAccounts = new ArrayList<BankAccount>();
 
+		if (ledgerAccounts.size() != 0) {
+			if (ledgerAccounts.size() < getAllAccounts().size()) {
+				addAccountsToLedger();
+				return 2;
+			} else if (ledgerAccounts.size() > getAllAccounts().size()) {
+				accounts.clear();
+				for (int i = 0; i < ledgerAccounts.size(); i++) {
+					accounts.add(ledgerAccounts.get(i));
+				}
+				return 1;
+			} else {
+				if (ledgerAccounts.equals(getAllAccounts())) {
+					return 0;
+				} else {
+					accounts.clear();
+					for (int i = 0; i < ledgerAccounts.size(); i++) {
+						accounts.add(ledgerAccounts.get(i));
+					}
+					return 1;
 				}
 			}
+		} else {
+			return -1;
 		}
-
-//		if (accounts != null) {
-//			return true;
-//		} else {
-//			return false;
-//		}
 
 	}
 
